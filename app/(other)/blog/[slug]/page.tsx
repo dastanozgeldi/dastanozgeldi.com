@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import PostHeader from "./_components/post-header";
+import PostHeader from "../../../../components/post-header";
 import { getPost } from "@/lib/blog";
 import { formatDate } from "@/lib/formatters";
 import { site } from "@/config/site";

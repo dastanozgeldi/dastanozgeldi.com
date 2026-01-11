@@ -1,9 +1,9 @@
+import Link from "next/link";
 import Image from "next/image";
 import { ExternalLinkIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { site } from "@/config/site";
 import data from "@/config/projects.json";
-import Link from "next/link";
 
 export function ProjectList() {
   return (

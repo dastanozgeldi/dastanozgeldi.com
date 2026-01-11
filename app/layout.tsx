@@ -1,8 +1,6 @@
-import "@/styles/globals.css";
 import { Metadata } from "next";
 import { site } from "@/config/site";
-import Nav from "@/components/nav";
-import Footer from "@/components/footer";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -61,11 +59,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="py-3 px-6 max-w-2xl m-auto min-h-screen flex flex-col space-y-6">
-        <Nav />
-        {children}
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

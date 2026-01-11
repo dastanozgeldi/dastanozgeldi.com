@@ -1,5 +1,5 @@
-import { formatDate } from "@/lib/formatters";
 import { Suspense } from "react";
+import { formatDate } from "@/lib/formatters";
 import Views from "./views";
 
 export default function PostHeader({
