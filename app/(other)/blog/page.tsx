@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { formatDate } from "@/lib/formatters";
+import { formatDate } from "@/lib/utils";
 import { getPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
@@ -22,9 +22,7 @@ export default async function Page() {
                 {post.title.toLowerCase()}
               </span>
               <div className="text-sm text-muted-foreground">
-                {formatDate(post.date, {
-                  short: true,
-                }).toLowerCase()}
+                {formatDate(post.date)}
                 {" / "}
                 <>{post.views.toLocaleString()} views</>
               </div>
