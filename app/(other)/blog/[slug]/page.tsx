@@ -1,10 +1,9 @@
 import { Metadata } from "next";
-import { getPost, type Views } from "@/lib/blog";
+import { getPost, incrementViewCount } from "@/lib/blog";
 import { formatDate } from "@/lib/utils";
 import { site } from "@/config/site";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import redis from "@/lib/redis";
 
 export async function generateMetadata({
   params,
@@ -63,16 +62,7 @@ export default async function Post({
 }
 
 async function ViewCount({ slug }: { slug: string }) {
-  const viewsData = (await redis.get("views")) as Views;
+  const updatedViews = await incrementViewCount(slug);
 
-  const postViews = viewsData.find((view) => view.slug === slug);
-  if (postViews) {
-    postViews.views += 1;
-  } else {
-    viewsData.push({ slug, views: 1 });
-  }
-
-  await redis.set("views", JSON.stringify(viewsData));
-
-  return <span>{postViews?.views.toLocaleString()} views</span>;
+  return <span>{updatedViews.toLocaleString()} views</span>;
 }

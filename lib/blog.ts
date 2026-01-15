@@ -1,5 +1,14 @@
 import postsData from "@/config/posts.json";
-import redis from "./redis";
+import { Redis } from "@upstash/redis";
+
+if (!process.env.REDIS_TOKEN) {
+  throw new Error("REDIS_TOKEN is not defined");
+}
+
+const redis = new Redis({
+  url: process.env.REDIS_URL,
+  token: process.env.REDIS_TOKEN,
+});
 
 export type Views = {
   slug: string;
@@ -32,4 +41,19 @@ export async function getPost(slug: string) {
     ...post,
     views,
   };
+}
+
+export async function incrementViewCount(slug: string) {
+  const viewsData = (await redis.get("views")) as Views;
+
+  const postViews = viewsData.find((view) => view.slug === slug);
+  if (postViews) {
+    postViews.views++;
+  } else {
+    viewsData.push({ slug, views: 1 });
+  }
+
+  await redis.set("views", JSON.stringify(viewsData));
+
+  return postViews?.views ?? 0;
 }
