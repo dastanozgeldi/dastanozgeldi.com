@@ -1,6 +1,6 @@
 import redis from "@/lib/redis";
 
-export default async function Views({ slug }: { slug: string }) {
+export default async function ViewCount({ slug }: { slug: string }) {
   const viewsData = (await redis.get("views")) as {
     slug: string;
     views: number;
@@ -15,5 +15,5 @@ export default async function Views({ slug }: { slug: string }) {
 
   await redis.set("views", JSON.stringify(viewsData));
 
-  return <>{postViews?.views.toLocaleString()} views</>;
+  return <span>{postViews?.views.toLocaleString()} views</span>;
 }

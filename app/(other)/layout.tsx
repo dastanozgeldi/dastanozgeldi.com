@@ -1,9 +1,10 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { Fragment } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const links = ["/blog", "/projects"];
 const socials = [
@@ -60,9 +61,8 @@ export default function OtherLayout({
         <span className="text-sm text-muted-foreground font-mono">
           find me on:{" "}
           {socials.map((social, index) => (
-            <>
+            <Fragment key={index}>
               <a
-                key={index}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -71,7 +71,7 @@ export default function OtherLayout({
                 {social.label}
               </a>
               {index < socials.length - 1 ? ", " : "."}
-            </>
+            </Fragment>
           ))}
         </span>
       </footer>
