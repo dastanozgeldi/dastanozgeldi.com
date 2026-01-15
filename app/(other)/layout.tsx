@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const links = ["/blog", "/projects"];
+const links = ["/projects", "/blog"];
 const socials = [
   {
     href: "https://x.com/dastanozgeldi",
