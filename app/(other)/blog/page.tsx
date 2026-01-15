@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Suspense } from "react";
-import redis from "@/lib/redis";
 import { formatDate } from "@/lib/formatters";
 import { getPosts } from "@/lib/blog";
 
@@ -28,9 +26,7 @@ export default async function Page() {
                   short: true,
                 }).toLowerCase()}
                 {" / "}
-                <Suspense fallback={<>... views</>}>
-                  <AllViews slug={post.slug} />
-                </Suspense>
+                <>{post.views.toLocaleString()} views</>
               </div>
             </div>
           </Link>
@@ -38,15 +34,4 @@ export default async function Page() {
       </div>
     </div>
   );
-}
-
-async function AllViews({ slug }: { slug: string }) {
-  const allViews = (await redis.get("views")) as {
-    slug: string;
-    views: number;
-  }[];
-
-  const views = allViews.find((view) => view.slug === slug)?.views ?? 0;
-
-  return <>{views.toLocaleString()} views</>;
 }

@@ -1,40 +1,35 @@
 import postsData from "@/config/posts.json";
 import redis from "./redis";
 
-export type Post = {
+export type Views = {
   slug: string;
-  date: string;
-  title: string;
   views: number;
-};
+}[];
 
-// shape of the HSET in redis
-type Views = {
-  [key: string]: string;
-};
+function findViewsBySlug(allViews: Views | null, slug: string) {
+  return allViews?.find((view) => view.slug === slug)?.views ?? 0;
+}
 
-export const getPosts = async () => {
-  const allViews: null | Views = await redis.get("views");
-  const posts = postsData.posts.map((post): Post => {
-    const views = Number(allViews?.[post.slug] ?? 0);
+export async function getPosts() {
+  const allViews = await redis.get<Views>("views");
+  const posts = postsData.posts.map((post) => {
+    const views = findViewsBySlug(allViews, post.slug);
     return {
       ...post,
       views,
     };
   });
   return posts;
-};
+}
 
-export const getPost = async (slug: string) => {
-  const allViews: null | Views = await redis.get("views");
+export async function getPost(slug: string) {
+  const allViews = await redis.get<Views>("views");
   const post = postsData.posts.find((post) => post.slug === slug);
-  if (!post) {
-    return null;
-  }
+  if (!post) return;
 
-  const views = Number(allViews?.[post.slug] ?? 0);
+  const views = findViewsBySlug(allViews, post.slug);
   return {
     ...post,
     views,
   };
-};
+}

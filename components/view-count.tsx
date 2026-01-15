@@ -1,10 +1,8 @@
+import { type Views } from "@/lib/blog";
 import redis from "@/lib/redis";
 
 export default async function ViewCount({ slug }: { slug: string }) {
-  const viewsData = (await redis.get("views")) as {
-    slug: string;
-    views: number;
-  }[];
+  const viewsData = (await redis.get("views")) as Views;
 
   const postViews = viewsData.find((view) => view.slug === slug);
   if (postViews) {
