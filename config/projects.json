@@ -1,10 +1,17 @@
 {
   "projects": [
     {
+      "name": "rette.ai",
+      "description": "revenue cycle management built for practices and billing teams.",
+      "href": "https://rette.ai",
+      "tag": "healthcare",
+      "bannerId": "UXFGY7LlErcgE9uQsbYw9GS6ZrNofniFYjVMJD2UzmceW8HI"
+    },
+    {
       "name": "defect ai",
       "description": "helping clinics reduce claim denials by building ai agents.",
       "href": "https://defect.kz",
-      "tag": "medtech",
+      "tag": "healthcare",
       "bannerId": "UXFGY7LlErcgYLPR6NkN1DRmibKkojeBWUv9hqTl4aFwS50u"
     },
     {
