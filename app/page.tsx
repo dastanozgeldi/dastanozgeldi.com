@@ -6,9 +6,9 @@ export default function Page() {
       <p>hi, i&apos;m dastan</p>
       <ul className="list-disc list-inside">
         <li>i&apos;m a software engineer from Almaty, Kazakhstan.</li>
-        <li>been programming since 13.</li>
+        <li>programming since 13.</li>
         <li>
-          currently working at{" "}
+          working at{" "}
           <a href="https://rette.ai" className="underline">
             rette.ai
           </a>
