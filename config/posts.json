@@ -1,6 +1,11 @@
 {
   "posts": [
     {
+      "slug": "my-everyday-carry-as-a-junior-developer",
+      "title": "My Everyday Carry as a Junior Developer",
+      "date": "2026-05-31"
+    },
+    {
       "slug": "my-2024-in-tech",
       "title": "My 2024 in Tech",
       "date": "2025-01-04"
