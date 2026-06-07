@@ -34,7 +34,7 @@ export default function OtherLayout({
       <nav className="flex items-center justify-between">
         <Link href="/">
           <Image
-            src="/pfp.jpg"
+            src="/avatar.png"
             alt="brand"
             width={32}
             height={32}

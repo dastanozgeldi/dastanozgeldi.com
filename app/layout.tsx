@@ -1,6 +1,19 @@
 import { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import { site } from "@/config/site";
 import "@/styles/globals.css";
+
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -27,7 +40,7 @@ export const metadata: Metadata = {
     description: site.description,
     site: "@dastanozgeldi",
     creator: "@dastanozgeldi",
-    images: [`${site.url}/images/og.png`],
+    // image supplied by app/twitter-image.tsx
   },
   openGraph: {
     url: site.url,
@@ -36,15 +49,7 @@ export const metadata: Metadata = {
     siteName: site.title,
     description: site.description,
     locale: "en-US",
-    images: [
-      {
-        url: `${site.url}/images/og.png`,
-        width: 1200,
-        height: 630,
-        alt: site.description,
-        type: "image/png",
-      },
-    ],
+    // image supplied by app/opengraph-image.tsx
   },
   icons: {
     icon: "/brand.png",
@@ -58,7 +63,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

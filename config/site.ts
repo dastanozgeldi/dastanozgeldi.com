@@ -10,7 +10,8 @@ export const site = {
     "TypeScript",
     "Node.js",
   ],
-  description: "Dastan • 18 y/o • Student • Full-stack Developer",
+  description:
+    "Software engineer from Almaty, Kazakhstan. Programming since 13, building rette.ai — AI for healthcare revenue cycle.",
   image: "https://dastanozgeldi.com/brand.png",
   cdn: "https://utfs.io/a/u0e5kx6sa4",
 };
