@@ -3,6 +3,10 @@ import Link from "next/link";
 import { GH_COLORS, getContributionLevels } from "@/lib/github";
 import styles from "./home.module.css";
 
+// Statically generated, refreshed hourly so the contributions graph stays in
+// sync with GitHub (the GraphQL POST isn't cached at the fetch layer).
+export const revalidate = 3600;
+
 /* ---- brand-logo glyphs (currentColor) ---- */
 function Github() {
   return (
@@ -129,7 +133,12 @@ export default async function Page() {
               aria-label="GitHub contributions over the last year"
             >
               {levels.map((lvl, i) => (
-                <i key={i} style={{ background: GH_COLORS[lvl] ?? GH_COLORS[0] }} />
+                <i
+                  key={i}
+                  style={{
+                    background: lvl < 0 ? "transparent" : GH_COLORS[lvl] ?? GH_COLORS[0],
+                  }}
+                />
               ))}
             </div>
           </div>
