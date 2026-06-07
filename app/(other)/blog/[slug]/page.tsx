@@ -41,23 +41,27 @@ export default async function Post({
   const { default: Post, metadata } = await import(`@/posts/${slug}.mdx`);
 
   return (
-    <>
-      <header className="space-y-2.5">
-        <h1 className="text-2xl font-bold">{metadata.title}</h1>
-        <div className="text-sm text-muted-foreground flex items-center justify-between">
+    <article>
+      <header className="mb-8 pb-6 border-b border-line-soft flex flex-col gap-3">
+        <h1 className="text-3xl font-semibold tracking-[-0.03em] leading-tight lowercase">
+          {metadata.title}
+        </h1>
+        <div className="flex items-center gap-2 font-mono text-[13px] text-faint">
           <span>{formatDate(metadata.date)}</span>
-
-          <Suspense fallback={<Skeleton className="w-20 h-5" />}>
+          <span>·</span>
+          <Suspense fallback={<Skeleton className="w-16 h-4" />}>
             <ViewCount slug={slug} />
           </Suspense>
         </div>
-        <p className="text-sm text-muted-foreground">{metadata.description}</p>
+        {metadata.description && (
+          <p className="text-muted-foreground">{metadata.description}</p>
+        )}
       </header>
 
-      <div className="prose">
+      <div className="prose prose-neutral max-w-none prose-headings:tracking-[-0.02em] prose-headings:font-semibold prose-a:text-blue prose-a:underline prose-a:underline-offset-2 prose-a:decoration-blue/30 hover:prose-a:decoration-blue prose-img:rounded-lg prose-img:border prose-img:border-line-soft prose-pre:rounded-lg">
         <Post />
       </div>
-    </>
+    </article>
   );
 }
 

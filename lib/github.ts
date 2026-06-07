@@ -1,3 +1,5 @@
+import { unstable_cache } from "next/cache";
+
 const GH_USER = "dastanozgeldi";
 
 // 53 weeks x 7 days — matches the prototype grid footprint.
@@ -88,9 +90,6 @@ async function fetchFromGitHub(token: string): Promise<number[]> {
       "User-Agent": GH_USER,
     },
     body: JSON.stringify({ query: CALENDAR_QUERY }),
-    // POST isn't stored in Next's fetch cache; freshness comes from the
-    // page-level `revalidate` segment config instead.
-    cache: "no-store",
   });
   if (!res.ok) throw new Error(`github graphql ${res.status}`);
 
@@ -125,8 +124,7 @@ type ContribResponse = { contributions: ContribDay[] };
 
 async function fetchFromPublicApi(): Promise<number[]> {
   const res = await fetch(
-    `https://github-contributions-api.jogruber.de/v4/${GH_USER}?y=last`,
-    { next: { revalidate: 3600 } }
+    `https://github-contributions-api.jogruber.de/v4/${GH_USER}?y=last`
   );
   if (!res.ok) throw new Error(`public api ${res.status}`);
 
@@ -145,7 +143,7 @@ async function fetchFromPublicApi(): Promise<number[]> {
  * when GITHUB_TOKEN is set, falls back to the free public API, then to a
  * deterministic mock so the page always renders.
  */
-export async function getContributionLevels(): Promise<number[]> {
+async function loadContributionLevels(): Promise<number[]> {
   const token = process.env.GITHUB_TOKEN;
   if (token) {
     try {
@@ -160,3 +158,11 @@ export async function getContributionLevels(): Promise<number[]> {
     return mockLevels();
   }
 }
+
+// Cached for an hour so the homepage stays statically rendered (ISR) and we
+// call GitHub at most once per hour regardless of traffic.
+export const getContributionLevels = unstable_cache(
+  loadContributionLevels,
+  ["github-contributions"],
+  { revalidate: 3600 }
+);
