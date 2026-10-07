@@ -77,7 +77,7 @@ export default async function Page() {
           <span className={styles.lbl}>now</span>
           <p className={styles.now}>
             building <a href="https://rette.ai">rette.ai</a>, ai for healthcare
-            revenue cycle — and taking a gap year after high school.
+            revenue cycle
           </p>
         </section>
 
